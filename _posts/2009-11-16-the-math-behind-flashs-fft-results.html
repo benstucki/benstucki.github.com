@@ -1,0 +1,55 @@
+--- 
+meta: 
+  _edit_last: "1"
+type: post
+published: true
+status: publish
+tags: 
+#- The Flash Platform
+- Archive
+title: The Math Behind Flash's FFT Results
+layout: post
+---
+<p>I've been playing with the <a href="http://hype.joshuadavis.com/">HYPE</a> framework recently, and I noticed that they use a <em>SoundAnalyzer</em> class to wrap the Flash Player's native <em>SoundMixer.computeSpectrum</em> method. This method's FFT mode is known to have some <em>problems</em> (not really, but more on that later), and as it turns out I've dealt with this some already. So here it is (after sitting in my drafts for longer than I care to admit), the Math behind Flash's FFT!</p>
+
+<p>First, let's take a look at some of the raw data from the <em>computeSpectrum</em> method. When I originally intended to write this post I took the opportunity to capture aggregate results over a large number of frequency sweeps using an AIR application, and I've posted some of the data for you here.</p>
+
+<p>
+<table align="left" style="margin-right: 10px; margin-top: 8px;">
+<tr><th>index</th><th>floor</th><th>peak</th><th>ceiling</th></tr>
+<tr><td>0</td><td>2</td><td>6</td><td>23995</td></tr>
+<tr><td>1</td><td>2</td><td>61</td><td>20591</td></tr>
+<tr><td>2</td><td>9</td><td>103</td><td>23995</td></tr>
+<tr><td>3</td><td>2</td><td>139</td><td>20591</td></tr>
+<tr><td>4</td><td>14</td><td>187</td><td>23995</td></tr>
+<tr><td>5</td><td>7</td><td>218</td><td>20591</td></tr>
+<tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+<tr><td>253</td><td>947</td><td>10901</td><td>23950</td></tr>
+<tr><td>254</td><td>217</td><td>10947</td><td>23995</td></tr>
+<tr><td>255</td><td>947</td><td>10990</td><td>23950</td></tr>
+</table>
+</p>
+
+<p>As I alluded to earlier, the long known <em>problem</em> with <em>computeSpectrum</em>'s FFT is that the majority of frequencies seem to be skewed toward the left side - but what they don't mention in the docs is that it's because the FFT results are still distributed <strong>linearly</strong>. Yep, even though the floor and ceiling values in my data were mostly useless (perhaps due to harmonics), you can see a rough pattern in the peak frequencies - an average linear distribution of about 43.07451!</p>
+
+<p>...okay, now let me back up a second to explain that. The way that we naturally understand sound is logarithmic. In musical terms this means that an octave below the note A-440 (440 is the frequency) is A-220, but an octave above A-440 is actually A-880 (not 660!). Audibly we think of the distance between A-440 and A-220 to be the same as between A-440 and A-880, but when displayed in a linear distribution (like our FFT results) A-880 is twice the distance from A-440 as A-220 - and when you use this linear distribution to create visualizations, it doesn't match our natural perception of the sound. So, just in case any of that got really confusing, I created a little Flash application to illustrate the issue better: <a href="http://lab.benstucki.net/archives/FFTMath/FFTMath.swf">FFTMath</a>.</p>
+
+<p>It's important to note that this isn't a flaw in Flash's FFT results. FFT calculations are supposed to return linear frequency distributions, but this raw data needs to be redistributed into logarithmically spaced frequency bands before being used for visualizations. Before redistributing our linear FFT results though, we're going to need some math to explain them.</p>
+
+<p>After lots of searching on my magic number and a little bit of luck, I came across this amazing blog post: <a href="http://code.compartmental.net/2007/03/21/fft-averages/">http://code.compartmental.net/2007/03/21/fft-averages/</a> - and Eureka!</p>
+
+<p><blockquote>Each point i in the FFT represents a frequency band centered on the frequency i/1024 * 44100 whose bandwidth is 2/1024 * 22050 = 43.0664062 Hz...</blockquote></p>
+
+<p>Alright math club, here's the good part. Based on the math from this awesome blog post and the results from my testing, it looks like Flash uses a sample size of 1024 and a default sample rate of 44100 resulting in frequency bands of (2/1024) * (44100/2) or 43.0664062 Hz. Even though an FFT with 1024 samples should return 513 valid results below the Nyquist frequency (sampleRate/2), Flash further clips the data to 256 results for a top frequency of around 11,025 Hz - still much higher than needed for most visualizations.</p>
+
+<p>
+To review:
+<ul>
+<li>frequency = i/1024 * 44100 </li>
+<li>bandwidth = (i==0) ? 1/1024 * 22050 : 2/1024 * 22050;</li>
+</ul>
+</p>
+
+<p>This information let's us understand the results we're getting from <em>computeSpectrum</em>. In my next post we'll use this information to redistribute the data and create more accurate frequency visualizations in Flash.</p>
+
+<p>Download: <a href="http://lab.benstucki.net/archives/FrequencyAnalyzer.zip">FrequencyAnalyzer.zip</a> (2.37 MB)</p>

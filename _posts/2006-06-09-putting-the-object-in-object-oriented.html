@@ -1,0 +1,38 @@
+--- 
+meta: 
+  _utw_tags_0: a:7:{i:0;O:8:"stdClass":1:{s:3:"tag";s:5:"class";}i:1;O:8:"stdClass":1:{s:3:"tag";s:8:"instance";}i:2;O:8:"stdClass":1:{s:3:"tag";s:6:"method";}i:3;O:8:"stdClass":1:{s:3:"tag";s:6:"object";}i:4;O:8:"stdClass":1:{s:3:"tag";s:3:"OOP";}i:5;O:8:"stdClass":1:{s:3:"tag";s:8:"property";}i:6;O:8:"stdClass":1:{s:3:"tag";s:8:"tutorial";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Object Oriented Programming
+- Archive
+title: Putting the Object in Object Oriented
+layout: post
+---
+<p>As you may know, I'm writing about Object Oriented Programming this month with a focus on the vocabulary and concepts common to all languages. I will try to make my posts short and to the point by providing only the most vital information in small, bite-sized pieces. As I describe new object oriented terms, I will link them to an article that describes the term in more detail. If you find anything confusing or you know of a better article describing the topic, please let me know. I'll try to improve these posts with time and keep them as a resource for others. So with that in mind, let's get started. I think the obvious place to begin learning Object Oriented Programming is to learn about objects.</p>
+
+<p>You may not know it, but you've probably got a good head start on learning about objects. Most procedural languages already have an <a href="http://en.wikipedia.org/wiki/Object_%28computer_science%29">object</a> (or structure) type, and perhaps you've used it to hold related variables, which are then called <a href="http://en.wikipedia.org/wiki/Property_%28computer_science%29">properties</a> of the object. Some languages will also allow you to assign functions to an object, which are then called <a href="http://en.wikipedia.org/wiki/Method_%28computer_science%29">methods</a>. Let's take a look at how a custom object might be created in my own make believe language.</p>
+
+<p>
+{% highlight javascript %}
+var myAuthor = new Object();
+myAuthor.name = "Ben Stucki";
+myAuthor.url = "http://blog.benstucki.net/";
+myAuthor.toString = new function() { return name; }
+trace(myAuthor.toString());
+{% endhighlight %}
+</p>
+
+<p>In the above code we created an object called "myAuthor" with two properties, "name" and "url", and one method, "toString". It took about four lines of code, which isn't bad, but what if we wanted to populate this object with information stored in the database? What if we needed to populate fifty objects with information from the database and reuse the same code across multiple projects? We could still accomplish this in procedural code, but there is an easier way to do it. Object oriented languages provide us with a way to predefine the properties and methods for a custom object in a separate chunk of code called a <a href="http://en.wikipedia.org/wiki/Class_%28computer_science%29">class</a>.</p>
+
+<p>Although the terms class and object are often confused, there is a very important distinction between them. The term class describes the instructions, while the term object describes the result. Classes are often described as a blueprint because multiple objects can be created from a single class, just like multiple buildings can be created from a single blueprint. To get an object we need to <a href="http://en.wikipedia.org/wiki/Instantiation">instantiate</a> (create an instance of) the class by setting a variable equal to the class result. Let's assume we've defined a custom class called "Author" in a separate file and take a look at how our "myAuthor" object might be created now.</p>
+
+<p>
+{% highlight javascript %}
+var myAuthor = new Author();
+trace(myAuthor.toString());
+{% endhighlight %}
+</p>
+
+<p>In this example most of the previous code has been replaced with a single line which instantiates the "Author" class to the "myAuthor" object. It looks very similar to how an external library or reference might be used, but it's a lot more powerful. In my next post we'll look inside the Author class, expand it some and try to understand why this object oriented thing is such a big deal.</p>

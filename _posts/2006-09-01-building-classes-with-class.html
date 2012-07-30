@@ -1,0 +1,38 @@
+--- 
+meta: 
+  _utw_tags_0: a:7:{i:0;O:8:"stdClass":1:{s:3:"tag";s:8:"abstract";}i:1;O:8:"stdClass":1:{s:3:"tag";s:11:"inheritance";}i:2;O:8:"stdClass":1:{s:3:"tag";s:3:"OOP";}i:3;O:8:"stdClass":1:{s:3:"tag";s:9:"protected";}i:4;O:8:"stdClass":1:{s:3:"tag";s:6:"static";}i:5;O:8:"stdClass":1:{s:3:"tag";s:8:"tutorial";}i:6;O:8:"stdClass":1:{s:3:"tag";s:7:"virtual";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Object Oriented Programming
+- Archive
+title: Building Classes with Class
+layout: post
+---
+<p>We've already covered what makes classes run in my last few posts. In this post we're going to cover some of the ways that classes can be extended and reused. This is where things start getting good.</p>
+
+<p>A very important capability of object oriented programming is that it allows a class to include the functionality of other classes automatically. This ability is called <a href="http://en.wikipedia.org/wiki/Inheritance_%28computer_science%29">inheritance</a>. When we use inheritance, all of the public methods and properties of the inherited class (often called the base class or super-class) are available in the new class (often called the derived class or sub-class). Let's take a look at how a new <em>Administrator</em> class could be created using the code we already have for the <em>Author</em> class used in my previous post.</p>
+
+<p>
+{% highlight javascript %}
+public class Administrator extends Author {
+	
+	private var _rights;
+	public function get rights() { return _rights }
+	
+	public function Administrator( id ) {
+		super( id ); // call the base classes' constructor
+		// get rights in database based on id
+		_rights = "rights from database";
+	}
+	
+}
+{% endhighlight %}
+</p>
+
+<p>In this example we've created an entirely new object with all the capabilities of the Author object, plus some additional functionality to manage the administrator's rights. We were able to do it with a fraction of the code it might have taken otherwise because we reused the work we already had in the Author object. We can then add functionality that is unique to the new class or even replace the existing properties and methods of the super class. When we replace an inherited method or property with a new one, it is called <a href="http://en.wikipedia.org/wiki/Method_overriding_%28programming%29">overriding</a>. This allows us to modify some of the super classes' existing functionality without having to start from scratch.</p>
+
+<p>As we discussed earlier, private methods are only accessible to code within the class, while public methods are accessible at all times. However there may be times when I want to allow access of my internal functionality to derived classes, but not to any other scope. Such an access modifier is usually indicated by the term <a href="http://blog.benstucki.net/?id=30">protected</a>. Protected methods and properties will allow access to any class that has inherited this class, but is still not accessible outside of that class. Similarly, <strong>internal</strong> will only allow access to classes that are held in the same package or namespace as this class.</p>
+
+<p>As you can see, there can be a lot of interplay between a base class and a derived class. A few other modifiers take this a bit further. The term abstract is usually used to indicate a class that cannot be initialized and is only intended to be inherited as a base class. Similarly, the term virtual refers to an item that is required in any derived class, but not available in the base class. Another very useful modifier is the term static, which indicates a property or method that does not require the class to be initialized. These items must have self contained logic and can be called directly from the class itself.</p>

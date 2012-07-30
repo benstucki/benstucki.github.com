@@ -1,0 +1,133 @@
+--- 
+meta: 
+  _utw_tags_0: no tags
+  _edit_last: "1"
+type: post
+published: true
+status: publish
+tags: 
+#- Adobe Flex
+#- FX Prefix
+- Archive
+title: More Flex 4 and the Boy Who Cried EPIC FAIL!
+layout: post
+---
+<p>In my <a href="http://blog.benstucki.net/?p=55">last post</a> I demonstrated how easy it is to migrate a Flex 3 application to Flex 4, but it seems that a few people weren't satisfied - well, maybe just one person. Aral was kind enough to comment on my post, and amongst the fun and games he reminded me that I need to add spark components to my application. Thanks Aral. I guess I did promise that after the migration people would be able to use all the cool new features and components, but I didn't go into a lot of details. However <a href="http://aralbalkan.com/2202">Aral's blog</a> does have information on what I might expect when I start to use spark components.</p>
+
+<p><blockquote>Simply compiling a Flex 3 app with the Flex 4 SDK is not migration. Refactoring your Flex 3 application so that you can enhance it with Spark components is not trivial and that’s the definition of migration that we need to adopt as that’s the real-world use case for migration (it doesn’t matter whether or not you can compile your Flex 3 app with the Flex 4 SDK if the first Flex 4 feature you’re going to use is going to require a far more extensive refactoring of your codebase to migrate it to a Flex 4 project utilizing both libraries.)</blockquote></p>
+
+<p>Ouch, looks like I got called out! To summarize, if I were to enhance the migrated Flex 3 application from my previous post with Spark components I should begin to feel the pain of Aral's real-world migration. In fact I'm promised that the task is not trivial and that the first Flex 4 feature I use will require far more extensive refactoring than the previous demo. Sounds scary. Let's see.</p>
+
+<h3>Setup</h3>
+<p>Taking the application from my previous post, I'm just going to add some mock data for the <em>TestControl</em> to use. Notice that nothing else changes in the application file throughout the demos.</p>
+
+<h5>SparkTest.mxml</h5>
+{% highlight mxml %}
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:test="com.test.controls.*" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+		]]>
+	</mx:Script>
+	<mx:Style source="//assets/css/global.css" />
+	<test:TestControl left="0" right="0" top="0" bottom="0"
+		data="{new ArrayCollection(['Test 1', 'Test 2', 'Test 3', 'Test 4', 'Test 5'])}" />
+</mx:Application>
+{% endhighlight %}
+
+<h3>Spark Components</h3>
+<p>I read in the online documentation that all the spark components are in the namespace "library://ns.adobe.com/flex/spark". I think that's pretty handy because I get code hinting and I'm not left to guess at what the new stuff is (especially if it's named inconsistently), but I'll let you try it out and see what you think.</p>
+
+<p>The plan is to declare the namespace and then use a new spark component <strong>just like I would with any other library</strong>. I'm going to try out the List component first, because I'm really excited to see how the layouts work.</p>
+
+<h5>TestControl.mxml</h5>
+{% highlight mxml %}
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:spark="library://ns.adobe.com/flex/spark">
+	<spark:List dataProvider="{data}" horizontalCenter="0" verticalCenter="0" />
+	<mx:Button label="Flex 4 Rules!" right="10" bottom="10" />
+</mx:Canvas>
+{% endhighlight %}
+
+<p>So, I just recompile and wait for the trail of errors and namespace hell which is promised to ensue - and… and my app runs. It doesn't just compile, but it functions with the Spark List component running as advertised. That's because <strong>FLEX 4 (SPARK) COMPONENTS WORK IN YOUR FLEX 3 CODE!</strong> I'm starting to think it's not my definition of the word migration that needs help, but my understanding of the word trivial. I should keep digging though - just in case.</p>
+
+<h3>Flex 3 States and Spark Components</h3>
+<p>At this point I'm totally outside of the namespaces argument, but a lot of Aral's migration headaches seem to revolve around the idea that you need to port all of your Flex 3 states to the new Flex 4 state syntax. I'll try to recreate this requirement by adding states to my custom component and seeing what breaks. I'm even adding a Spark transition just for fun.</p>
+
+<h5>TestControl.mxml</h5>
+{% highlight mxml %}
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:spark="library://ns.adobe.com/flex/spark">
+	<mx:states>
+		<mx:State name="vertical" />
+		<mx:State name="horizontal" enterState="animation.play()" >
+			<mx:SetProperty target="{list}" name="layout">
+				<mx:value>
+					<spark:HorizontalLayout />
+				</mx:value>
+			</mx:SetProperty>
+		</mx:State>
+	</mx:states>
+	<spark:Resize id="animation" target="{list}" widthTo="500" />
+	<spark:List id="list" dataProvider="{data}" horizontalCenter="0" verticalCenter="0" />
+	<mx:Button label="Flex 4 Rules!" click="this.currentState = 'horizontal';" right="10" bottom="10" />
+</mx:Canvas>
+{% endhighlight %}
+
+<p>You know the routine - but wait, I'm sure it only works now because the root tag is a halo component. Maybe if I tried to use the old state syntax <em>inside</em> of a spark component I would find hours of torturous migration pain.</p>
+
+<h3>Flex 3 States IN Spark Components</h3>
+<p>I'll use the new <em>Group</em> component as my container instead of <em>Canvas</em>. I have to put my child components in the mxmlContent property since I'm still using the old mx namespace to compile language features (such as states). I also added a "data" <em>Object</em> since <em>Group</em> doesn't normally have that property.</p>
+
+<h5>TestControl.mxml</h5>
+{% highlight mxml %}
+<spark:Group xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:spark="library://ns.adobe.com/flex/spark">
+	<spark:states>
+		<mx:State name="vertical" />
+		<mx:State name="horizontal" enterState="animation.play()" >
+			<mx:SetProperty target="{list}" name="layout">
+				<mx:value>
+					<spark:HorizontalLayout />
+				</mx:value>
+			</mx:SetProperty>
+		</mx:State>
+	</spark:states>
+	<mx:Object id="data" />
+	<spark:Resize id="animation" target="{list}" widthTo="500" />
+	<spark:mxmlContent>
+		<spark:List id="list" dataProvider="{data as IList}" horizontalCenter="0" verticalCenter="0" />
+		<mx:Button label="Flex 4 Rules!" click="this.currentState = 'horizontal';" right="10" bottom="10" />
+	</spark:mxmlContent>
+</spark:Group>
+{% endhighlight %}
+
+<p>Still working! Wow. So, I can use all the Spark components and Effects anywhere without changing the state syntax. What feature's left that <strong>would</strong> require me to change my state syntax? Well as far as I know the only feature that requires the new state syntax is the new state syntax. So, ummm.. If you want to change your component to use the new state syntax, then you <strong>do</strong> have to change your component to use the new state syntax. You don't have to do it throughout your application all at once though. Just like in this example you can try it out in a single component and leave the rest of your application just as it was. Your call.</p>
+
+<h3>Flex 4 States</h3>
+<p>To use Flex 4 states I'll need to change the language namespace to "http://ns.adobe.com/mxml/2009". After the language namespace change I'll have to put non-component declarations in the "Declarations" tag, and child components are assigned to the mxmlContent property automatically. Notice that I can still use the "library://ns.adobe.com/flex/halo" namespace to use all my standard Halo components just like I would before.</p>
+
+<h5>TestControl.mxml</h5>
+{% highlight mxml %}
+<spark:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+	xmlns:spark="library://ns.adobe.com/flex/spark"
+	xmlns:halo="library://ns.adobe.com/flex/halo">
+	<spark:states>
+		<spark:State name="vertical" />
+		<spark:State name="horizontal" enterState="animation.play()" />
+	</spark:states>
+	<fx:Declarations>
+		<fx:Object id="data" />
+		<spark:Resize id="animation" target="{list}" widthTo="500" />
+		<spark:HorizontalLayout id="horizontal" />
+	</fx:Declarations>
+	<spark:List id="list" dataProvider="{data as IList}"
+		layout.horizontal="{horizontal}" horizontalCenter="0" verticalCenter="0" />
+	<halo:Button label="Flex 4 Rules!"
+		click="this.currentState = 'horizontal';" right="10" bottom="10" />
+</spark:Group>
+{% endhighlight %}
+
+<h3>Conclusion</h3>
+<p>Let's review. FLEX 4 (SPARK) COMPONENTS WORK IN YOUR FLEX 3 CODE! Flex 3 (Halo) components work in your Flex 4 code. Flex 3 states work in your Flex 4 Code. Flex 4 states actually work in your Flex 3 code. Everything kind of works everywhere. There is no need to "port" your code to start using spark components. Again, I just don't know how else to say it - but you don't have to take my word for it. Download the latest <a href="http://labs.adobe.com/technologies/flashbuilder4/">Flash Builder 4 Beta</a> and try it out for yourself!</p>

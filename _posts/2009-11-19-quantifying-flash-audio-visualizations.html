@@ -1,0 +1,40 @@
+--- 
+meta: 
+  _edit_last: "1"
+  screen: http://blog.benstucki.net/images/FrequencyAnalyzer.png
+type: post
+published: true
+status: publish
+tags: 
+#- The Flash Platform
+- Archive
+title: Quantifying Flash Audio Visualizations
+layout: post
+---
+<p>In my last post I wrote about <a href="http://blog.benstucki.net/?p=60">The Math Behind Flash's FFT Results</a> and discussed the need to transform the default linear values returned by <em>computeSpectrum</em> into logarithmically spaced values. In this post I'll be discussing the Math behind my own <em>FrequencyAnalyzer</em> class (<a href="#download">available below</a>) which does just that.</p>
+
+<p>The goal I had when creating this class was to finally <strong>quantify</strong> the values used to create visualizations. That is, to know the exact center frequency and bandwidth of the frequency bands displayed. This is extremely important when creating "EQ" frequency visualizations and still very useful for creating experimental visualizations, but the information just hasn't been available in Flash - until now.</p>
+
+<p>At the core of <em>FrequencyAnalyzer</em> is the ability to take a frequency value and determine the closest index from the <em>computeSpectrum</em> results to correlate with it. This allows it to retrieve the closest known amplitude for any given frequency. It sounds kind of complicated, but it's actually just the inverse of the frequency to index calculation that I discussed in my previous post.</p>
+
+<ul>
+<li>frequency = i/1024 * 44100;</li>
+<li>i = frequency/44100 * 1024;</li>
+</ul>
+
+<p>This makes everything else possible, but I need to know more than a single frequency's amplitude. What I really need to know is the amplitude (or spectral density) of an entire range of frequencies. Furthermore this range needs to be defined logarithmically based on the center frequency given. Luckily, I have the math for that as well.</p>
+
+<p>Since we all perceive audio in a logarithmic scale of base 2, I know that an octave below any given frequency is frequency/2 and an octave above it is frequency*2. Octaves are a great way to determine the frequency range because they are inherently logarithmic, and in fact this is what most real-world frequency displays show (1, 1/2, or 1/3 octave bands). Knowing the defined octave bandwidth, <em>FrequencyAnalyzer</em> finds the index for the min and max frequencies of each frequency band and performs an aggregate calculation for the amplitude value. Simply pass in an array of center frequencies (some common ones are provided as constants) and the bandwidth (in octaves) and the rest is done for you!</p>
+
+{% highlight as3 %}
+var amplitudes:Vector.<Number> = FrequencyAnalyzer.computeFrequencies([250, 400, 600, 800], 1); // 4-band, 1 octave
+{% endhighlight %}
+
+<p>It's important to note that it doesn't calculate the average value for frequency bands. There's a special aggregate calculation needed which I'm still testing, but for now using the peak values seems to work quite well. Another item of note is the optional <em>stretchFactor</em> parameter.</p>
+
+<p>As discussed in my previous post, the sample rate (affected by <em>stretchFactor</em>) determines the highest frequency which is measured (11,025 Hz by default). For each increment of <em>stretchFactor</em> you will decrease the top measurable frequency by half, but you also boost the fidelity of the lower frequency ranges. This is important if you require a larger data set (~ 30+ frequency bands) and aren't interested in higher frequencies (above 5512.5 Hz for <em>stretchFactor</em> = 1). It's even possible to run <em>computeSpectrum</em> at both sample rates or determine the best <em>stretchFactor</em> automatically, but I've had enough math for today. I'll leave the rest up to you.</p>
+
+[swfobj src="http://lab.benstucki.net/archives/FrequencyAnalyzer/FrequencyAnalyzer.swf" width="470" height="220" flashVars="url=http://www.benstucki.net/mp3/01 The One Infallible.mp3"]
+
+<p><a id="download" ></a>
+Download: <a href="http://lab.benstucki.net/archives/FrequencyAnalyzer.zip">FrequencyAnalyzer.zip</a> (2.37 MB)</p>

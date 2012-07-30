@@ -1,0 +1,34 @@
+--- 
+meta: 
+  _utw_tags_0: a:4:{i:0;O:8:"stdClass":1:{s:3:"tag";s:9:"component";}i:1;O:8:"stdClass":1:{s:3:"tag";s:8:"download";}i:2;O:8:"stdClass":1:{s:3:"tag";s:4:"Flex";}i:3;O:8:"stdClass":1:{s:3:"tag";s:11:"open-source";}}
+  _utw_tags_: a:4:{i:0;O:8:"stdClass":1:{s:3:"tag";s:9:"component";}i:1;O:8:"stdClass":1:{s:3:"tag";s:8:"download";}i:2;O:8:"stdClass":1:{s:3:"tag";s:4:"Flex";}i:3;O:8:"stdClass":1:{s:3:"tag";s:11:"open-source";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Adobe Flex
+- Archive
+title: Free ID3Stream and ID3Reader Components for Flex 2
+layout: post
+---
+<p>Another set of completely free and open source Flex 2 components are ready for download. Before I go into detail about these, let me explain what I think makes them unique. I've read a lot about using rich internet applications as a replacement for desktop applications, but there aren't many examples out there yet. Unfortunately, the examples I do see are mostly graphical mock-ups of Microsoft Windows. When I personally consider using the Flash Platform for ubiquitous desktop applications I don't think about constraining the user interface, instead I consider how the ByteArray class may be used to read and manipulate files. The ID3Stream and ID3Reader classes are just a few examples of the untapped power that is in Flex.</p>
+
+<p><a href="http://lab.benstucki.net/archives/id3streamexplorer/"><img src="http://lab.benstucki.net/archives/id3streamexplorer/id3stream.jpg" width="320" height="215" alt="Image of Revive by Imaginary Baseball League"  align="right" /></a><strong>The ID3Stream Component</strong> is used to download the ID3 portion of an MP3 file and load it into an ID3Reader instance. This allows users to view the MP3's metadata quickly without having to download the whole file (downloads about 40kb as opposed to 4mb).</p>
+
+<p><strong>The ID3Reader Component</strong> is used to parse the raw bytes of an ID3 tag into an array of AS3 objects. It is capable of parsing frame types that the core ID3 object can't yet, including embedded images.</p>
+
+<p>
+	<ul>
+		<li><a href="http://lab.benstucki.net/archives/id3streamexplorer/">ID3Stream Explorer</a> (<a href="http://www.adobe.com/go/labs_flex2_downloads">Flash Player 9 <strike>Beta 3</strike> Required</a>)</li>
+		<li><a href="http://lab.benstucki.net/archives/id3streamexplorer/srcview">View ID3Stream Explorer Source</a></li>
+		<li><a href="http://lab.benstucki.net/archives/id3streamexplorer/srcview/examples.zip">Download ID3Stream Explorer Source</a></li>
+	</ul>
+</p>
+
+<p>These components are licensed under a <a href="http://creativecommons.org/licenses/by/2.5/">Creative Commons Attribution 2.5 License</a>. Feel free to download and modify the code for any use as long as my name is in there somewhere. Updates and improvements to the ID3Stream and ID3Reader components will be appended to this entry as they grow up and get more polish.</p>
+
+<a href="http://creativecommons.org/licenses/by/2.5/">
+	<img src="http://creativecommons.org/images/public/somerights20.png" alt="Creative Commons Badge" width="88" height="31" />
+</a>
+
+<p><strong>Updated 05/28/2008</strong> This code has been refactored and merged into the <a href="http://metaphile.googlecode.com">Metaphile AS3 Library</a>. If you're looking for ID3 parsing capability please refer to the Metaphile project.</p>

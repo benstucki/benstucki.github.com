@@ -1,0 +1,28 @@
+--- 
+meta: 
+  _utw_tags_0: a:3:{i:0;O:8:"stdClass":1:{s:3:"tag";s:6:"events";}i:1;O:8:"stdClass":1:{s:3:"tag";s:3:"OOP";}i:2;O:8:"stdClass":1:{s:3:"tag";s:8:"tutorial";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Object Oriented Programming
+- Archive
+title: Looking at Events Objectively
+layout: post
+---
+<p>In my previous post we talked about classes and learned most of the building blocks that make them run. I wanted to take a sidebar for a moment to address the importance of events. They aren't an object oriented only concept, but I do believe that understanding events are vitally important to good object oriented programming practices.</p>
+
+<p>Events are implemented in countless and continuously varying ways, but they are all used for the same purpose. Events are the only way for objects to give unsolicited feedback to an application. Let's assume that the <em>Author</em> class used in my previous example has an event called <em>update</em> which is broadcast whenever data is changed by another user. The example below shows how an application might be coded in my own imaginary programming language to respond to this event.</p>
+
+<p>
+{% highlight javascript %}
+author = new Author();
+author.addEventListener("update", updateApp);
+
+private function updateApp( event ) {
+	// update application specific properties
+}
+{% endhighlight %}
+</p>
+
+<p>In this code, we've simply told the application that when the <em>author</em> object fires the <em>update</em> event, it needs to run the <em>updateApp</em> function. This effectively passes control of a part of the application to the author object itself, while still keeping application specific code outside of the reusable and encapsulated class. Notice that the <em>updateApp</em> function also received an <em>event</em> parameter. Most platforms will automatically pass parameters to listener functions as a means for the object to communicate event specific data back to the application. In many frameworks (such as Flex and .NET) commonly used events have already been associated with a predefined function name for you, but that shouldn't keep you from creating your own custom events and event listeners. In my next post we'll continue expanding on the idea of classes by learning inheritance and the many ways it keeps you from duplicating code.</p>

@@ -1,0 +1,37 @@
+--- 
+meta: 
+  _utw_tags_0: a:3:{i:0;O:8:"stdClass":1:{s:3:"tag";s:9:"embedding";}i:1;O:8:"stdClass":1:{s:3:"tag";s:4:"Flex";}i:2;O:8:"stdClass":1:{s:3:"tag";s:4:"font";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Adobe Flex
+- Archive
+title: Flex Font Embedding
+layout: post
+---
+<p>Recently I released the <a href="http://labs.atellis.com/2007/07/11/atellis-reflection-component/">Atellis Reflection Component</a> on <a href="http://labs.atellis.com/">Atellis Labs</a>, and I've been meaning to post a few follow up topics. The first is on a common issue with embedded fonts in Flex.</p>
+
+<p>The reflection component uses the BitmapData class to copy and manipulate an image of the area being reflected, and a small limitation of using BitmapData is that client side fonts don't show up in the resulting image. No problem though, just embed a font and use it as the default font for the application. Sounds easy, but be sure you embed the bold face for your font as well. This is a hard to find technique that will make sure all the text in your application is using the embedded font.</p>
+
+<p>
+{% highlight css %}
+@font-face {
+	src: local("Arial");
+	fontFamily: ArialEmbedded;
+	fontWeight: normal;
+}
+
+@font-face {
+	src: local("Arial");
+	fontFamily: ArialEmbedded;
+	fontWeight: bold;
+}
+
+Application {
+	font-family: ArialEmbedded;
+}
+{% endhighlight %}
+</p>
+
+<p><strong>Note</strong>: Embedding fonts can increase the size of your swf files significantly.</p>

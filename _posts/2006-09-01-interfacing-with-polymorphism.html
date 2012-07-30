@@ -1,0 +1,17 @@
+--- 
+meta: 
+  _utw_tags_0: a:4:{i:0;O:8:"stdClass":1:{s:3:"tag";s:9:"interface";}i:1;O:8:"stdClass":1:{s:3:"tag";s:3:"OOP";}i:2;O:8:"stdClass":1:{s:3:"tag";s:12:"polymorphism";}i:3;O:8:"stdClass":1:{s:3:"tag";s:8:"tutorial";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Object Oriented Programming
+- Archive
+title: Interfacing with Polymorphism
+layout: post
+---
+<p>In my last post we talked about inheritance and the many ways you can reuse your classes. In this post we're going to talk a bit about polymorphism and interfaces.</p>
+
+<p>Polymorphism is a very complicated sounding word for a very simple idea. It simply means that a class can pretend to be any of it's base classes. For instance if I passed an Administrator object from my last post to a function that was expecting an Author object, that would be acceptable. Administrator objects can be treated like Author objects because the Administrator class inherits from Author. We can also enforce this behavior by using interfaces.</p>
+
+<p>An interface is very similar to a class, accept that it contains absolutely no logic. Interfaces only define the API (all the method signatures and properties) for a class, but they don't define how you actually code it.  Let's say that I want to create an interface called <em>Person</em> that defines all the methods and properties that should belong to objects that represent a person. I could then implement this interface in entirely separate classes that may not share the same code base. Although inheritance was not a viable option, we could still take advantage of polymorphism because we are assured that these objects share the same <em>Person</em> interface.</p>

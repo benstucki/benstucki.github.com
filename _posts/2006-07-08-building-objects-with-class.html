@@ -1,0 +1,102 @@
+--- 
+meta: 
+  _utw_tags_0: a:9:{i:0;O:8:"stdClass":1:{s:3:"tag";s:16:"access-modifiers";}i:1;O:8:"stdClass":1:{s:3:"tag";s:11:"constructor";}i:2;O:8:"stdClass":1:{s:3:"tag";s:13:"encapsulation";}i:3;O:8:"stdClass":1:{s:3:"tag";s:10:"get-method";}i:4;O:8:"stdClass":1:{s:3:"tag";s:16:"method-signature";}i:5;O:8:"stdClass":1:{s:3:"tag";s:3:"OOP";}i:6;O:8:"stdClass":1:{s:3:"tag";s:11:"overloading";}i:7;O:8:"stdClass":1:{s:3:"tag";s:10:"set-method";}i:8;O:8:"stdClass":1:{s:3:"tag";s:8:"tutorial";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Object Oriented Programming
+- Archive
+title: Building Objects with Class
+layout: post
+---
+<p>In my previous post we learned about objects, including properties and methods, and reviewed some example code illustrating how a class is instantiated to an object. We're going to build on those concepts today by going over the internal workings of a class. We've got a lot of ground to cover, so let's get started by looking at how the "Author" class from my previous article might be coded in my own imaginary programming language.</p>
+
+<p>
+{% highlight javascript %}
+public class Author {
+	
+	public var name;
+	public var url;
+	
+	public function Author() {
+		name = "Ben Stucki";
+		url = "http://blog.benstucki.net/";
+	}
+	
+	public function toString() {
+		return name;
+	}
+	
+}
+{% endhighlight %}
+</p>
+
+<p>The first line of code declares the "Author" class, and everything inside the declaration is part of that class. Like all of the properties and methods in this example, the class declaration includes the term "public". The keywords public and private (along with a handful of others) are called <strong>access modifiers</strong>, because they modify the access that external code has to the classes' internal methods and properties. The keyword <bold>public</bold> allows access by any code (internal and external to the class), while the keyword <bold>private</bold> only allows access by the classes' internal code.</p>
+
+<p>You should recognize the public properties "name" and "url", and the public method "toString" from my previous post, but this class also has a public method called "Author". This method is a <strong>constructor</strong> and it is automatically called when the class is instantiated. Most languages recognize a constructor as any method with the same name as its class, although some recognize constructors based on a predefined function name.</p>
+
+<p>There is also something wrong with this class that you probably haven't noticed yet. I've been calling "name" and "url" properties, even though simple variables in a class are technically called <strong>fields</strong>. To external code, fields and properties appear to be the same thing, but internally they are entirely different. Let's take a look at how the "name" and "url" properties should be coded.</p>
+
+<p>
+{% highlight javascript %}
+public class Author {
+	
+	private var _name;
+	public function get name() { return _name; }
+	public function set name( value ) { _name = value; }
+	
+	private var _url;
+	public function get url() { return _url; }
+	public function set url( value ) { _url = value; }
+	
+	public function Author() {
+		name = "Ben Stucki";
+		url = "http://blog.benstucki.net/";
+	}
+	
+	public function toString() {
+		return name;
+	}
+	
+}
+{% endhighlight %}
+</p>
+
+<p>Properties are defined using get and set methods. Whenever the value of a property is requested the corresponding <strong>get method</strong> is invoked, and its return value is given in response. Similarly, when a value is assigned to a property, the property's <strong>set method</strong> is invoked and the assigned value is passed as an argument. This gives your properties the opportunity to execute code just like a method does. If a get method is provided without a set method the property is read-only, and if a set method is provided without a get method the property is write-only.</p>
+
+<p>Notice that a property's get and set methods share the same name. This is also allowed for other methods, including the constructor, as long as their method signatures are unique. A <a href="http://en.wikipedia.org/wiki/Method_signature"><strong>method signature</strong></a> is the unique combination of the method name as well as the number and type of arguments used by the method. When two or more methods share the same name it is called <strong>overloading</strong>. Let's take a look at one way that overloading might be used.</p>
+
+<p>
+{% highlight javascript %}
+public class Author {
+	
+	private var _name;
+	public function get name() { return _name; }
+	public function set name( value ) { _name = value; }
+	
+	private var _url;
+	public function get url() { return _url; }
+	public function set url( value ) { _url = value; }
+	
+	public function Author() {
+		name = "Ben Stucki";
+		url = "http://blog.benstucki.net/";
+	}
+	
+	public function Author( id ) {
+		//get data from database based on id
+		//populate properties based on data
+		name = "Name from Database";
+		url = "URL from database";
+	}
+	
+	public function toString() {
+		return name;
+	}
+	
+}
+{% endhighlight %}
+</p>
+
+<p>In this example we've overloaded the constructor by creating an "Author" method with a unique method signature. If this class is initialized without an argument the original constructor will be used, but if an argument is provided the new constructor will be used. Although these processes are very different, there is very little difference in how the class itself is used. The ability to wrap complex functionality into relatively simple objects is called <strong>encapsulation</strong>. The primary benefit of object oriented programming is that it allows us to encapsulate related functionality into reusable classes. In my next few posts we'll take a look at events, polymorphism, and more advanced object oriented concepts.</p>

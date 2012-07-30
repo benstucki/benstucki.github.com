@@ -1,0 +1,39 @@
+--- 
+meta: 
+  _utw_tags_0: no tags
+type: post
+published: true
+status: publish
+tags: 
+#- Adobe Flex
+- Archive
+title: Flex Components Month End Review
+layout: post
+---
+<p>I've been blogging about Flex Components (mostly just posting examples) all month long, and according to my <a href="http://blog.benstucki.net/?id=16">new blog format</a> it's time to wrap things up and move on to next month's subject. This month was code heavy with examples posted for <a href="http://blog.benstucki.net/?id=18">Audio Visualizations</a>, <a href="http://blog.benstucki.net/?id=20">Visual Reflections</a>, <a href="http://blog.benstucki.net/?id=21">3D Bitmaps</a>, <a href="http://blog.benstucki.net/?id=22">Runtime CSS with CSS 3 Borders</a>, <a href="http://blog.benstucki.net/?id=23">AutoScroll Galleries</a> and <a href="http://blog.benstucki.net/?id=24">Metadata Parsing</a> in Flex 2. Although most of the components used in these examples aren't complete, I feel relieved that they are finally out in the community, and I hope that they are improved upon and used regularly. I have posted the full <a href="http://lab.benstucki.net/archives/as3/srcview/">com.fusiox source library</a> to make it easier to download and explore. Here is how it breaks out.</p>
+
+<p>
+	<dl>
+		<dt>com.fusiox.media.ID3Reader</dt><dd>The ID3Reader Component is used to parse the raw bytes of an ID3 tag into an array of AS3 objects. It is capable of parsing frame types that the core ID3 object can't yet, including embedded images.</dd>
+		
+		<dt>com.fusiox.media.ID3Stream</dt><dd>The ID3Stream Component is used to download the ID3 portion of an MP3 file and load it into an ID3Reader instance. This allows users to view the MP3's metadata quickly without having to download the whole file.</dd>
+		
+		<dt>com.fusiox.skins.CSS3Box</dt><dd>The CSS3Box Skin is a border skin that implements a small subset of the CSS3 Backgrounds and Borders Module working draft. It provides the ability to set border color, width, and corner radius values for each border and corner independently.</dd>
+		
+		<dt>com.fusiox.styles.CSSManager</dt><dd>The CSSManager Component handles run-time CSS parsing in Flex. It includes methods for parsing CSS text and files as well as defining custom keyword values and shorthand properties. It cooperates with the existing StyleManager framework in Flex and allows component developers to take advantage of its ability while not requiring its use.</dd>
+		
+		<dt>com.fusiox.ui.Bitmap3D</dt><dd>The Bitmap3D component is used to display any BitmapData object in 3D. Methods and properties are available for changing the rotation angles, image quality (for speed) and pixel by pixel depth values.</dd>
+		
+		<dt>com.fusiox.ui.Image</dt><dd>The Image component extends the core Image class to load an image from a ByteArray.</dd>
+		
+		<dt>com.fusiox.ui.Pixel3D</dt><dd>The Pixel3D component extends Bitmap3D and manipulates each pixel's depth based on color.</dd>
+		
+		<dt>com.fusiox.ui.Reflection</dt><dd>The reflection component is used to give the illusion of a reflective surface in your Flex 2 applications. It includes a few properties for custom fading, skewing and scaling and was made with real-time reflection in mind.</dd>
+		
+		<dt>com.fusiox.ui.Scroller</dt><dd>The Scroll component will render a horizontal display container that scrolls according to your mouse position. You should provide it with a dataProvider and itemRenderer and it will do the rest.</dd>
+		
+		<dt>com.fusiox.ui.Visualization</dt><dd>The visualization component can display sound data in multiple formats and includes custom events and properties for using advanced bitmap effects without changing the component class itself. It draws dynamically based on size and keeps memory consumption to a minimum.</dd>
+	</dl>
+</p>
+
+<p>I genuinely enjoy developing in MXML and AS3. If I can generate enough useful information for a month focused on Flex application development (as opposed to just components) you may see this subject again, but I have a host of content on other topics that I need to get to first. If you have found my posts on Flex Components useful, please continue to subscribe, bookmark, aggregate or otherwise read this blog while I explore other areas of development.</p>

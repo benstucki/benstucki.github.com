@@ -1,0 +1,31 @@
+--- 
+meta: 
+  _utw_tags_0: a:2:{i:0;O:8:"stdClass":1:{s:3:"tag";s:4:"Flex";}i:1;O:8:"stdClass":1:{s:3:"tag";s:4:"icon";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Adobe Flex
+- Archive
+title: IconUtility Component for Dynamic Run-Time Icons
+layout: post
+---
+<p>I've seen a number of emails on the <a href="http://tech.groups.yahoo.com/group/flexcoders/">flexcoders mailing list</a> and even a few <a href="http://blog.xsive.co.nz/archives/233">blog posts</a> that are asking a very specific question: "How do you use run-time loaded images as the icon for buttons, containers, and related components?". The answer they've gotten so far is that you can't, at least not without creating a lot of custom components. The icon styles built into the Flex framework were only intended for embedded graphics. Although internally they can work with almost any <em>DisplayObject</em> as the icon, the styles and properties themselves are typed as <em>Class</em>. So how can you turn a DisplayObject into a Class?<p>
+
+<p>To be honest, I hit my head against the wall on this one for a handful of evenings. In the end I came up with two workable solutions. Arguably the cleanest way would be to take the run-time loaded graphics, dynamically generate the bytes for a swf which contains that image as a BitmapAsset, and then load the swf to retrieve the generated Class. This would allow you to assign an honest to goodness BitmapAsset Class to the icon property. The problem I had with this method is that it wouldn't be very easy for developers to use. Even if I created a class to generate the swf from a Loader, there would be some ActionScript involved for the developer to wait for the swf to be loaded and assign the resulting class to the right place. After thinking it through, I decided not to implement this solution. Instead, I found a way to turn the original question on it's head.</p>
+
+<p>After stepping through the code that handles the icon assignment a few times, I realized the original question, "How can you turn a DisplayObject into a Class?" should really be phrased "How can you reference a Class which displays the right DisplayObject when instantiated?". This is an easier problem to solve. For my first attempt, I've created the IconUtility class. It includes a static method which accepts a url and a component reference, then returns a reference to the IconUtility class itself (which happens to extend BitmapAsset). When the class is instantiated, it will use the information you have passed in to determine which image should be displayed. I've decided to release it through my blog for now, since it is still unpolished and a bit of a hack.</p>
+
+<p>
+{% highlight mxml %}
+<mx:Button id="example" label="Example" 
+  icon="{IconUtility.getClass(example, 'http://www.exampledomain.com/image.jpg')}" />
+{% endhighlight %}
+</p>
+
+<p>
+	<ul>
+		<li><strong>Example</strong>: <a href="http://lab.benstucki.net/archives/IconAssociations/IconAssociations.html">IconAssociations</a></li>
+		<li><strong>Download</strong>: <a href="http://lab.benstucki.net/archives/IconUtility.zip">IconUtility Class</a> (302 kb)</li>
+	</ul>
+</p>

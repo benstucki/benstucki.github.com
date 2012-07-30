@@ -1,0 +1,70 @@
+--- 
+meta: 
+  _utw_tags_0: no tags
+  _utw_tags_: no tags
+type: post
+published: true
+status: publish
+tags: 
+#- Adobe Flex
+- Archive
+title: Flex 4 Namespaces and the Boy Who Cried EPIC FAIL!
+layout: post
+---
+<p>A few months ago I posted about being <strike>strongly</strike> <strong>adamantly</strong> <a href="http://blog.benstucki.net/?p=53">against the use of Fx Prefixes</a> in the Flex 4 SDK. In fact I probably went a little overboard - but holy crap, kittens lives were at stake! In the end the Flex team made what I think was the right decision and began moving away from Fx Prefixes in favor of using namespaces. Yay!</p>
+
+<p>However, the impact of this change recently hit <a href="http://aralbalkan.com/2202">Aral Balkan</a>, a prominent Flash community member, and suddenly the controversy was reborn. In Aral's words:</p>
+
+<p><blockquote>My inner engineer understands that namespaces are the most elegant long-term solution. It doesn't help that my inner engineer is feuding loudly with my inner agile development evangelist (who is appalled at the sacrifice of short-term simplicity in favor of long-term design) and at my inner user experience designer who cannot help but look at the issue from the perspective of the end user.</blockquote></p>
+
+<p>I think that's an inner struggle that a lot of developers can identify with, and on both sides you see similar extremes trying to prove themselves correct. The point of contention for me, however, is the assumption that you must choose one over the other. Do you really have to give up standards for simplicity? I know a <a href="http://en.wikipedia.org/wiki/False_dichotomy">false choice</a> when I see one.</p>
+
+<p>The truth is that complexity exists in our line of work and it's our job to recognize it, thoughtfully consider it, and offer a <strong>solution</strong> that values simplicity. I would argue that Fx Prefixing never solved a problem, it ignored the problem all together - which is bad in any circumstance. The use of namespaces however recognizes the issue and addresses it beautifully, adding <strong>consistency</strong> throughout the framework. Here, again, we could battle semantics forever, but let's just migrate a Flex 3 application to Flex 4 and tangibly feel Aral's pain instead.</p>
+
+<p>I'm going to be covering all of the issues involved in migrating your Flex 3 application to Flex 4 as far as I know. I've been using Flex 4 for months and have written applications both with Fx prefixes and without. I've also migrated a handful of my own Flex 3 applications to the latest Flex 4. By my definition this means getting an existing Flex 3 app to compile with the Flex 4 SDK so that I can use all of the cool new features and components. If I'm incorrect, for the love of God somebody correct me.</p>
+
+<h3>Setup</h3>
+
+<p>To begin with I created a new project using the Flex 3.1 SDK. I wanted the app to be simple enough to blog about, but I also made sure to hit any pain points involved. I decided to make an application with one custom MXML component (so that I wasn't avoiding custom component migration issues) and some CSS (because Aral's really off on a tirade about the CSS). After I created my custom component I realized that I had already added the first namespace to my project - before even migrating! Here's the code so far.</p>
+
+<h5>SparkTest.mxml</h5>
+{% highlight mxml %}
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:test="com.test.controls.*" layout="absolute">
+	<mx:Style source="//assets/css/global.css" /&gt;
+	<test:TestControl left="0" right="0" top="0" bottom="0" />
+</mx:Application>
+{% endhighlight %}
+
+<h5>TestControl.mxml</h5>
+{% highlight mxml %}
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml">
+	<mx:Button label="Flex 4 Rules!" right="10" bottom="10" />
+</mx:Canvas>
+{% endhighlight %}
+
+<h5>global.css</h5>
+{% highlight css %}
+Button {
+	color: red;
+}
+{% endhighlight %}
+
+<h3>Migration</h3>
+<p>So, again, the plan is to switch the SDK to compile with Flex 4 targeting Flash 10 and see what happens - and... and my app runs. Yup, you heard it here first! <strong>FLEX 3 COMPONENTS WORK IN FLEX 4 WITHOUT MODIFICATION</strong>. In fact entire Flex 3 applications compile in Flex 4 without modification. Custom components work in Flex 4 without modification. There is no need to modify your Flex 3 code when you start to use Flex 4. I'm just not sure how else to say it - but wait! I admit there is one problem, what about that CSS warning? Ah, you caught me! There is <em>1 step</em> required to get your CSS working <em>if you used Type selectors</em>. You must add a default namespace to the top of your CSS files.</p>
+
+{% highlight css %}
+@namespace "library://ns.adobe.com/flex/halo";
+
+Button {
+	color: red;
+}
+{% endhighlight %}
+
+<p>I submit to you the winning entry of the <a href="http://aralbalkan.com/2209">1 Step Migration Challenge</a>.</p>
+
+<p><strong>Step 1:</strong> Add @namespace "library://ns.adobe.com/flex/halo"; to the top of your CSS files!
+(do I get some kind of prize for winning?)</p>
+
+<h3>Conclusion</h3>
+<p>This is, in my opinion, the easiest SDK migration so far, and I think it's unfortunate that one person's bad experience while porting code between random Flex 4 Alpha versions could cause such mass confusion. I know that the simplicity and approachability of Flex is a huge priority to everyone (yes even the vocal minority), and it's a great credit to the SDK team that they're able to achieve it <strong>without</strong> sacrificing standards.</p>

@@ -1,0 +1,27 @@
+--- 
+meta: 
+  _utw_tags_0: a:4:{i:0;O:8:"stdClass":1:{s:3:"tag";s:5:"Flash";}i:1;O:8:"stdClass":1:{s:3:"tag";s:5:"H.264";}i:2;O:8:"stdClass":1:{s:3:"tag";s:3:"On2";}i:3;O:8:"stdClass":1:{s:3:"tag";s:5:"Video";}}
+type: post
+published: true
+status: publish
+tags: 
+#- The Flash Platform
+- Archive
+title: The Flash Platform and H.264
+layout: post
+---
+<p>Around the time Macromedia released Flash MX with On2 video, I read a post from <a href="http://www.kaourantin.net/">Tinic Uro</a> titled <em><a href="http://www.kaourantin.net/2005/08/quest-for-new-video-codec-in-flash-8.html">The Quest for a New Video Codec in Flash 8</a></em>. It describes some of the decision making processes that went into supporting On2 video over other codecs such as H.264. I've had a renewed interest in Flash video and video casting lately, so I revisited the post to refresh my memory. After reading it again, I think there are only a few deal breakers for H.264 in Flash. The first one is customer costs.</p>
+
+<p><blockquote>If you have to pay a fee for streaming your video over the web it can be a real problem. I understand that this model works well for dedicated hardware and I support it. But how do you keep track of this on the web? This is Flash. It would be like asking for money everytime you use a certain HTML tag on your web pages.</blockquote></p>
+
+<p>In other words if your service streams a lot of H.264 video over the internet, the standards group that created H.264 is going to require that your service pay a fee. So Macromedia decided that forcing it's users into third party licensing fees is unacceptable. Another point that I think applies is about completeness.</p>
+
+<p><blockquote>This mostly affects standards based codecs. If only half of the specification is implemented why even claiming to be compliant? We went this route before with Sorenson Spark which is an incomplete implementation of H.263 and it bit us badly when trying to implement certain solutions. Many codecs failed on this one.</blockquote></p>
+
+<p>H.264 conformance is still a problem on devices that are coming to market. I can only imagine that there was a lot of filling in the blanks when they were being developed and these compatibility issues are a result. I think Macromedia made the right decision at the time and went with On2 over H.264, but how did it affect the big picture?</p>
+
+<p>Well, if a service wants to support video for the internet and for mobile devices like the video iPod they only have a few options right now. One option is to create an On2 version and a H.264 version for each video. Storage is cheap after all, but video compression is processor intensive and tends to take a while. This option is uninviting, but not impossible. Another option is to use only H.264 and require the newest QuickTime plug-in (bundled with iTunes) to play it on the internet. This makes life a pain for the user, but it's easier and cheaper for the service. Anything else means that users either couldn't play it in their iPod or couldn't play it in their browser.</p>
+
+<p>Apple's QuickTime format was the starting point for H.264. They know how important internet video is and they would like to control it (as does Adobe). I doubt we will see any support for Flash Light or On2 video in an iPod anytime soon. They would prefer that we keep using their format and keep downloading the newest QuickTime plug-in (still bundled with iTunes) to view it. There's only one minor hole in Apple's master plan for world video domination. The H.264 standard isn't theirs at all. They gave up propriety to regain footing.</p>
+
+<p>I think you can see where I'm going with all this. H.264 is gaining ground in becoming a solid standard, and I think it fits the criteria for being complete these days. Adobe has generated a lot of business around video production, and I'm sure they would like to offer a single solution for video deployment. Unless I'm missing something obvious (which has been known to happen) the remaining obstacles involve politics and licensing, which can hopefully be resolved. Since Flash already supports other quality video formats, supporting H.264 won't force users to pay licensing fees. The fees will still be required if a service chooses to go with H.264, but does that mean it shouldn't be an option?</blockquote></p>

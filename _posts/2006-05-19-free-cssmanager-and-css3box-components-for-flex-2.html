@@ -1,0 +1,31 @@
+--- 
+meta: 
+  _utw_tags_0: a:4:{i:0;O:8:"stdClass":1:{s:3:"tag";s:9:"component";}i:1;O:8:"stdClass":1:{s:3:"tag";s:8:"download";}i:2;O:8:"stdClass":1:{s:3:"tag";s:4:"Flex";}i:3;O:8:"stdClass":1:{s:3:"tag";s:11:"open-source";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Adobe Flex
+- Archive
+title: Free CSSManager and CSS3Box Components for Flex 2
+layout: post
+---
+<p><a href="http://lab.benstucki.net/archives/css3boxexplorer/"><img src="http://lab.benstucki.net/archives/css3boxexplorer/css3box.jpg" alt="Image of CSS used by CSS3Box" width="200" height="125" align="right"></a>Another week has passed and more entirely free, open source Flex 2 components are ready for download. This week I spent some time porting my CSSManager and CSS3Box AS2 components into AS3 for Flex. These components are considerably more involved than in previous weeks and hopefully more useful as well.</p>
+
+<p><strong>The CSSManager Component</strong> handles run-time CSS parsing in Flex. It includes methods for parsing CSS text and files as well as defining custom keyword values and shorthand properties. It cooperates with the existing StyleManager framework in Flex and allows component developers to take advantage of its ability while not requiring its use. I can't overstate the impact I think this could have for Flex 2. At the moment, however, it's not case sensitive and can't handle Flex specific or custom objects, only standard CSS values.</p>
+
+<p><strong>The CSS3Box Skin</strong> is a border skin that implements a small subset of the <a href="http://www.w3.org/TR/2005/WD-css3-background-20050216/">CSS3 Backgrounds and Borders Module</a> working draft. It provides the ability to set border color, width, and corner radius values for each border and corner independently. I didn't get around to updating any child components of their new boundaries, but I really just needed it to demonstrate how the CSSManager class is used.</p>
+
+<p>
+	<ul>
+		<li><a href="http://lab.benstucki.net/archives/css3boxexplorer/">CSS3Box Explorer</a> (<a href="http://www.adobe.com/go/labs_flex2_downloads">Flash Player 9 <strike>Beta 3</strike> Required</a>)</li>
+		<li><a href="http://lab.benstucki.net/archives/css3boxexplorer/srcview">View CSS3Box Explorer Source</a></li>
+		<li><a href="http://lab.benstucki.net/archives/css3boxexplorer/srcview/examples.zip">Download CSS3Box Explorer Source</a></li>
+	</ul>
+</p>
+
+<p>These components are licensed under a <a href="http://creativecommons.org/licenses/by/2.5/">Creative Commons Attribution 2.5 License</a>. Feel free to download and modify the code for any use as long as my name is in there somewhere. Updates and improvements to the CSSManager and CSS3Box components will be appended to this entry as they grow up and get more polish.</p>
+
+<a href="http://creativecommons.org/licenses/by/2.5/">
+	<img src="http://creativecommons.org/images/public/somerights20.png" width="88" height="31" alt="Creative Commons Badge" />
+</a>

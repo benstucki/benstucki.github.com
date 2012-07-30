@@ -1,0 +1,34 @@
+--- 
+meta: 
+  _utw_tags_0: a:1:{i:0;O:8:"stdClass":1:{s:3:"tag";s:29:"Degrafa-CSS-Skinning-360-Flex";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Adobe Flex
+- Archive
+title: Meet Degrafa CSS Skinning
+layout: post
+---
+<p>There's been a lot of buzz around the <a href="http://www.degrafa.com/2008/01/01/degrafa-origin-released/">Degrafa Origin</a> release that went out over a month ago, but there was something included that you probably haven't heard of yet, <a href="http://www.degrafa.com/2007/12/18/introducing-degrafa-css-support/">Degrafa CSS Skinning</a>. If you're still putting the finishing touches on your submission to the <a href="http://www.360conferences.com/360flex/2008/02/360flex-api-contest-in-full-swing.html">360Flex API Contest</a> or you just want to get your existing application in the <a href="http://www.degrafa.com/2008/01/03/degrafa-derby-win-a-flex-builder-3-license/">Degrafa Derby</a>, maybe you should take a look. It's dead simple to use, and it could give your application the edge you need to win.<p>
+
+<p>I've included the full MXML (only four lines) of a Flex application below. All of the custom styling you see in the screen shot is controlled using Degrafa CSS.</p>
+
+<p>
+{% highlight mxml %}
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" >
+	<mx:Style source="assets/style/style.css" />
+	<mx:Panel title="Degrafa CSS Skinning!" left="20" right="20" top="20" bottom="20" />
+</mx:Application>
+{% endhighlight %}
+</p>
+
+<p>
+	<a href="http://samples.degrafa.com/CSSSkin/CSSSkin.html">
+		<img src="http://blog.benstucki.net/images/CSSSkin.png" width="100%" />
+	</a>
+</p>
+
+<p>I've found that the first reaction most people have to seeing this demo is that it must be some kind of trick. Maybe we cut the graphics just right to make it look cool in the screen shot or maybe there's some secret trickery going on in the components? So, for you non-believers we published this sample on <a href="http://samples.degrafa.com/">samples.degrafa.com</a>. You can resize it all you want, and even check out the source to see the CSS. The second reaction is that we must have seriously hi-jacked the framework in some way. Maybe we have some singletons stashed away or require special compiler setup? Nope. No ugly framework hackery or compiler requirements included. In fact, it's just a plain old Programmatic Skin. A really awesome, well architected (if I do say so myself) Skin. Of course if you don't believe me, you could just download the source from <a href="http://www.googlecode.com/p/degrafa/">google code</a>, and if you're really feeling curious, check out the recording of my <a href="http://adobechats.adobe.acrobat.com/p48923740/">615Flex User Group Presentation</a>.</p>
+
+<p>Have questions? Want to have an in depth conversation about the simple genius of the IFill interface? Come to 360|Flex Atlanta and stop me in the halls, at a party, or after <a href="http://scalenine.com/blog/2007/12/13/speaking-about-degrafa-at-360flex-atlanta/">Juan's Degrafa Session</a>. That's what it's all about. Not going to 360|Flex? Why not? <a href="http://360flex.eventbrite.com/">Register here</a>.</p>

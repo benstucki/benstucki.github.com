@@ -1,0 +1,65 @@
+--- 
+meta: 
+  _edit_last: "1"
+  _wp_old_slug: ""
+type: post
+published: true
+status: publish
+tags: 
+#- Adobe Flex
+- Archive
+title: Optimizing Flash Content for Mobile Devices
+layout: post
+---
+<p>I had the honor of giving a presentation on "Optimizing Flash Content for Mobile Devices" at this year's Adobe MAX conference and promised to post a follow up here. For those that weren't able to make it, the presentation was broken up into four main areas: optimizing graphics and media, Flash rendering optimizations (which made up the bulk of my talk), memory use and code execution, and benchmarking. The main take-away was to understand the cost vs. reward of the optimization strategies available and make sure you've hit the quick fixes before diving headlong into an advanced technique (like blitting).</p> <!--more-->
+
+<p>
+Here are a list of quick fixes for reference.
+
+<h4>Rendering Optimizations</h4>
+<ul>
+<li>FrameRate - sometimes reducing framerate results in smoother playback.</li>
+<li>Change StageQuality (Low, Medium, High, Best).</li>
+<li>Use the appropriate DisplayObject (Shape, Sprite, MovieClip).</li>
+<li>Flatten the DisplayList tree.</li>
+<li>Avoid using the alpha property.</li>
+<li>Avoid using blendmodes or filters.</li>
+<li>Stop running MovieClips.</li>
+<li>Avoid off-stage objects.</li>
+<li>Set visibility to false or removeChild (depending on reuse etc.).</li>
+</ul>
+
+<h4>Memory use and CPU</h4>
+<ul>
+<li>Focus on perceived performance first (progressive loading, avoid screen freezes, etc).</li>
+<li>SQLite database and query optimizations can go a long way in data intensive apps.</li>
+<li>Use data-chunking across frames to avoid screen freezes.</li>
+<li>Are you using asynchronous calls? Should you be? (Synchronous locking vs. Asynchronous overhead)</li>
+<li>Don't trigger unnecessary rendering. (Don't set TextField text inside of loops, etc.)</li>
+<li>Avoid RegEx when you can use String functions (indexOf, lastIndexOf, search).</li>
+<li>Avoid timers (consider using a single, global instance when needed).</li>
+<li>Vector is faster than Array, multiplication is faster than division, etc - but only in very high iteration!</li>
+</ul>
+</p>
+
+<p>Once you've addressed the quick fixes, it might be time to consider more advanced optimization techniques like cacheAsBitmap, cacheAsBitmapMatrix and bitmap blitting. Object caching/pooling is also a great strategy to make sure your app creates and destroys as few objects as possible (this can do wonders for performance because it keeps the garbage collector from being overworked and ultimately stalling your app). Finally, make sure to benchmark release versions of your app on devices throughout the process so that you can address performance bottlenecks as they happen (and not before or after).</p>
+
+<p>This presentation also included a lot of little known facts about Flash 10.1 that I found interesting, including the JPG decompressor's ability to perform direct mipmapping (while never decompressing the full file), the fact that filters and blendmodes require two bitmaps to be stored in memory (although Flash tries to release one in special cases), the behavior of all BitmapAsset instances to use a single BitmapData in memory, and finding that 10.1 recycles event instances when bubbling. I need to do further testing to really validate the impact of some of these items, but I think it shows that optimization is becoming a lot more interesting as the Flash player grows to work well in a host of new environments.</p>
+
+<p>Along with these new facts came a few new questions during the presentation. I've tried to answer them below.</p>
+
+<h5>Does the showRedrawRegions API (used to debug rendering issues) work in AIR for mobile devices?</h5>
+<p>Yep. Works for me.</p>
+
+<h5>Do changes made to single reference BitmapData (setup by the player for embedded assets) propagate to all parent bitmaps or does the player recognize this special case and create a new BitmapData?</h5>
+<p>For reference, the <a href="http://help.adobe.com/en_US/as3/mobile/WS4bebcd66a74275c3-576ba64d124318d7189-7ff9.html">Adobe documentation</a> was my source for this little known factoid. The short answer is that any modifications made on the BitmapData will not propagate to other instances (which is the expected behavior and preserves backwards compatibility). What's really interesting is that each bitmap still has a completely separate BitmapData instance in AS3, however in testing memory consumption I can see that creating 100s of asset instances does not create the same footprint as truly separate BitmapData instances would. So it is in fact preserving memory using the behavior described, but it appears that this is something the Flash Player does under the hood by sharing memory space for the backing data. When changes are made on a given instance, a new memory space is created for the data now specific to that instance automatically.</p>
+
+<p>Alright, that's all until next time. Here is a <a href="http://www.benstucki.net/sessions/OptimizingFlashContentforMobileDevices.pdf">download of my slides</a> and a <a href="http://tv.adobe.com/watch/max-2010-develop/optimizing-flash-player-compatible-content-for-mobile-devices/">video of the presentation</a> on Adobe TV. If you'd like to dig in further feel free to browse through the following resources as well.</p>
+
+<p>
+	<ul>
+		<li><a href="http://help.adobe.com/en_US/as3/mobile/index.html">http://help.adobe.com/en_US/as3/mobile/index.html</a></li>
+		<li><a href="http://www.adobe.com/devnet/devices/fpmobile.html">http://www.adobe.com/devnet/devices/fpmobile.html</a></li>
+		<li><a href="http://unitedmindset.com/jonbcampos/2010/09/08/optimization-techniques-for-air-for-android-apps/">http://unitedmindset.com/jonbcampos/2010/09/08/optimization-techniques-for-air-for-android-apps/</a></li>
+	</ul>
+</p>

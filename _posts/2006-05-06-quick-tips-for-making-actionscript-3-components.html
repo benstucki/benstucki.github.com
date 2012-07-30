@@ -1,0 +1,29 @@
+--- 
+meta: 
+  _utw_tags_0: a:1:{i:0;O:8:"stdClass":1:{s:3:"tag";s:4:"Flex";}}
+type: post
+published: true
+status: publish
+tags: 
+#- Adobe Flex
+- Archive
+title: Quick Tips for Making ActionScript 3 Components
+layout: post
+---
+<p>Developing components in AS3 is an incredibly powerful way to bring the freedom of Flash into the structure of Flex. Hopefully I will have time this month to thoroughly review the code in my AS3 components, as well as post about my experience so far with Flex application development and the Cairngorm framework. In the meantime, here are a few tips I learned from developing the <a href="http://blog.benstucki.net/?id=18">Visualization Component</a> that might save you time while developing your own components. I hope you learn as much from my mistakes as I have.</p>
+
+<p>
+	<dl>
+		<dt>Extend the UIComponent Class for Display Objects</dt>
+		<dd>When I started with the Flex 2 Alpha, it took me a few hours to figure out why my AS3 component would not display when I declared it in MXML. It was extending the Sprite class. For a component to display in an MXML application it needs to inherit from the UIComponent or better. If I was smart I would have read it in the LiveDocs, but who reads the instruction manual when you've got all the parts in front of you?</dd>
+		
+		<dt>Use Style Metadata Tags</dt>
+		<dd>If you've got a custom property that would be considered a style element, set it up the right way. Use the Style Metadata tag above your class and get the value of your property using the getStyle method. It makes setting a default value a little more involved, but its well worth it. Just tell the boss you're coding all the rules for CSS inheritance and use the time you just saved to take a break.</dd>
+		
+		<dt>Graphics Bad, BitmapData Good</dt>
+		<dd>Sometimes you just have to use the graphics drawing API. Otherwise, use a BitmapData instance. The BitmapData methods are statistically a bazillion times faster and you get to play with all the cool effects.</dd>
+		
+		<dt>ByteArrays Don't Like Being Told What to Do</dt>
+		<dd>The ByteArray is one of the most powerful classes in AS3. It lets you pick apart and modify almost anything one byte at a time. Sometimes there are large groups of bytes in a ByteArray that you would rather skip. My experience has been that setting a ByteArray's position attribute to anything other than zero can corrupt the data. If you need to get back to the beginning, setting the position to zero works fine, but I don't trust anything past that right now. Use the readBytes method or just loop through the bytes you aren't using.</dd>
+	</dl>
+</p>
