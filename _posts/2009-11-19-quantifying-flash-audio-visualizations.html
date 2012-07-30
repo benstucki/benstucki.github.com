@@ -34,7 +34,7 @@ var amplitudes:Vector.<Number> = FrequencyAnalyzer.computeFrequencies([250, 400,
 
 <p>As discussed in my previous post, the sample rate (affected by <em>stretchFactor</em>) determines the highest frequency which is measured (11,025 Hz by default). For each increment of <em>stretchFactor</em> you will decrease the top measurable frequency by half, but you also boost the fidelity of the lower frequency ranges. This is important if you require a larger data set (~ 30+ frequency bands) and aren't interested in higher frequencies (above 5512.5 Hz for <em>stretchFactor</em> = 1). It's even possible to run <em>computeSpectrum</em> at both sample rates or determine the best <em>stretchFactor</em> automatically, but I've had enough math for today. I'll leave the rest up to you.</p>
 
-[swfobj src="http://lab.benstucki.net/archives/FrequencyAnalyzer/FrequencyAnalyzer.swf" width="470" height="220" flashVars="url=http://www.benstucki.net/mp3/01 The One Infallible.mp3"]
+[swfobj src="http://files.benstucki.com/fftmath/frequencyanalyzer.swf" width="470" height="220" flashVars="url=http://www.benstucki.net/mp3/01 The One Infallible.mp3"]
 
 <p><a id="download" ></a>
-Download: <a href="http://lab.benstucki.net/archives/FrequencyAnalyzer.zip">FrequencyAnalyzer.zip</a> (2.37 MB)</p>
+Download: <a href="http://files.benstucki.com/fftmath/frequencyanalyzer.zip">FrequencyAnalyzer.zip</a> (2.37 MB)</p>
