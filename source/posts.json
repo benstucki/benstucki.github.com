@@ -1,0 +1,4 @@
+---
+title: posts
+---
+{"posts":[{% for post in site.posts %}{% capture year %}{{ post.date | date:"%Y" }}{% endcapture %}{% if year > '2005' %}"{{ BASE_PATH }}{{ post.url }}"{% if post.title != 'Hello World' %},{% endif %}{% endif %}{% endfor %}]}
