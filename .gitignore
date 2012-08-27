@@ -1,3 +1,4 @@
+public/*
 _site/*
 _theme_packages/*
 
@@ -9,3 +10,5 @@ Thumbs.db
 .rbenv-version
 .rvmrc
 wordpress.xml
+.preview-mode
+.sass-cache

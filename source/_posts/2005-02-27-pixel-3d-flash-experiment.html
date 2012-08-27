@@ -1,0 +1,15 @@
+--- 
+meta: 
+  _utw_tags_0: no tags
+type: post
+published: true
+status: publish
+tags: 
+- Flash
+- Archive
+title: Pixel 3D Flash Experiment
+layout: post
+---
+<img src="http://web.archive.org/web/20050412135919im_/http://blog.benstucki.net/images/picResume.jpg" width="63" height="69" align="left" style="margin-right:8px;margin-bottom:3px;border:1px thin #000000;">
+	 <strong>Pixel 3D Flash Experiment [ Sun, 27 Feb 2005 10:09:27 PM GMT ]</strong><br/>
+     For no particular reason this weekend I decided to test out an idea that I've had for a while. The basis is this: each pixel in an image, already having an x and y coordinate in the 2D space, is given a z coordinate based on it's color and placed in a simple 3D Flash Engine ( modified from some <a href="http://web.archive.org/web/20050412135919/http://www.bit-101.com/" target="_blank">bit-101</a> examples ). Lighter colored pixels are closer, and darker colored pixels are further away. When this somewhat chaotic cluster of 3D points are viewed at the correct angle they form a 2D image, even when all the points are the same color. I was pretty happy to see that it worked right off the bat. So I decided to color each point correctly and see how close to the original image I could get. This is when I noticed something a little more interesting. Allot of images actually placed points close to the area that they were in the real life 3D space. Allot of times it's just luck, but on some relatively solid colored objects it is because the most light hits the closest areas and creates shadows in the furthest areas. When these pixels get interpreted in this Flash experiment, those shadowed areas are placed further away and lighter areas placed closer. Please feel free to <a href="http://web.archive.org/web/20050412135919/http://lab.benstucki.net/flash/pixel3d.swf" target="_blank">try it out</a> or <a href="http://web.archive.org/web/20050412135919/http://www.benstucki.net/downloads/pixel3d.zip">download the source</a>, and let me know what you think. For right now some PHP is required to analyze the image and give us back allot of XML so that Flash can read the data. Then our Flash goes through the XML and plots each point using the drawing API. Hopefully I can revisit this in Flash 8 and get a more fluid motion with all that plotting going on. Maybe even dispense with the need for PHP? If it's fast enough I may even do some RGB separation so that each pixel would translate into 3 points. Anyway, here's hoping it can handle it.
