@@ -4,8 +4,8 @@ for(var i=0; i<queries.length; i++) {
 	if(query[0]=='p' || query[0]=='id') {
 		$.ajax({url:"posts.json", dataType:"json", success: function(data) {
 			var count = data.posts.length;
-			var url = data.posts[Number(count-query[1]-1)];
-			window.location = "http://benstucki.com" + url;
+			var url = data.posts[Number(count-query[1])];
+			window.location = "http://benstucki.com/" + url;
 		}})
 	}
 }
